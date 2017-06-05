@@ -18,9 +18,9 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   header: {
-    margin: 10, // Add margin
-    color: '#000000', // White color
-    fontFamily: 'Avenir', // Change font family
-    fontSize: 26, // Bigger font size
+    margin: 10, 
+    color: '#000000',
+    fontFamily: 'Avenir', 
+    fontSize: 26, 
   }
 });

@@ -1,0 +1,19 @@
+{
+    "common": {
+        "serviceBaseUrl": "http://10.10.15.84/gre/",
+        "apiPath": "api",
+        "apiVersion": "v1",
+        "retry": "3",
+        "requestTimeout": 20000,
+        "language": [
+            {
+                "name": "English",
+                "value": "en-gb"
+            },
+            {
+                "name": "Tiếng Việt",
+                "value": "vi-vn"
+            }
+        ]
+    }
+}

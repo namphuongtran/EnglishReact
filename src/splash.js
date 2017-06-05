@@ -6,9 +6,9 @@ export default class Splash extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.logoContainer}>
-          <Image style={styles.logo} source={require('./images/logo.png')}/>
+          <Image style={styles.logo} source={require('../assets/images/logo.png')}/>
           <Text style={styles.welcome}>
-            Welcome to React Grammar English!
+            Welcome to Academic English!
           </Text>
         </View>
         <View>

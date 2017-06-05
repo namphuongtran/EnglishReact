@@ -10,7 +10,8 @@ import {
     Image
 } from 'react-native';
 import Grammar from '../grammarEnglish/grammar';
-import Register from '../register/register';
+import Register from '../account/register';
+import ForgotPassword from '../account/forgotPassword';
 
 export default class Login extends Component {
     goHome = () => {
@@ -29,11 +30,18 @@ export default class Login extends Component {
             .navigate('Register');
     }
 
+    goForgot = () => {
+        this
+            .props
+            .navigation
+            .navigate('ForgotPassword');
+    }
+
     render() {
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <View style={styles.logoContainer}>
-                    <Image style={styles.logo} source={require('../../images/logo.png')}/>
+                    <Image style={styles.logo} source={require('../../../assets/images/logo.png')}/>
                 </View>
                 <View style={styles.formContainer}>
                     <StatusBar barStyle="light-content"/>
@@ -61,8 +69,8 @@ export default class Login extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.forgotConatiner}>
-                        <TouchableOpacity style={styles.forgotButtonContainer}>
-                            <Text style={styles.buttonLabel}>Forgot Password?</Text>
+                        <TouchableOpacity style={styles.forgotButtonContainer} onPress={this.goForgot}>
+                            <Text style={styles.forgotButtonLabel}>Forgot Password?</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.registerContainer}>
@@ -121,7 +129,13 @@ const styles = StyleSheet.create({
     },
     buttonLabel: {
         textAlign: 'center',
-        fontWeight: '700'
+        fontWeight: '700',
+        color: '#ffffff'
+    },
+    forgotButtonLabel: {
+        textAlign: 'center',
+        fontWeight: '700',
+        color: '#2c3e50'
     },
     registerContainer: {
         paddingTop: 100,
