@@ -1,5 +1,12 @@
 import React, {Component} from 'react';
-import {Button, ScrollView, View, StyleSheet} from 'react-native';
+import {
+    Button,
+    ScrollView,
+    View,
+    StyleSheet,
+    Image,
+    Text
+} from 'react-native';
 import {DrawerNavigator, DrawerItems, TabNavigator, StackNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Login from '../login/login';
@@ -9,6 +16,9 @@ import Grammar from '../grammarEnglish/grammar';
 import Academic from '../academicEnglish/academic';
 import Favorites from '../favorites/favorites';
 import Settings from '../../modules/settings/settings';
+import About from './about';
+import AccountInfo from '../account/info';
+import News from '../news/news';
 
 export const Tabs = TabNavigator({
     Grammar: {
@@ -25,11 +35,25 @@ export const Tabs = TabNavigator({
             tabBarIcon: (<Icon name="dashboard" size={24} color="#8e44ad"/>)
         }
     },
+    News: {
+        screen: News,
+        navigationOptions: {
+            tabBarLabel: 'News',
+            tabBarIcon: (<Icon name="dvr" size={24} color="#34A853"/>)
+        }
+    },
     Favorites: {
         screen: Favorites,
         navigationOptions: {
             tabBarLabel: 'Favorites',
             tabBarIcon: (<Icon name="favorite" size={24} color="#16a085"/>)
+        }
+    },
+    AccountInfo: {
+        screen: AccountInfo,
+        navigationOptions: {
+            tabBarLabel: 'Me',
+            tabBarIcon: (<Icon name="account-circle" size={24} color="#FBBC05"/>)
         }
     }
 }, {
@@ -42,16 +66,21 @@ export const Tabs = TabNavigator({
         activeBackgroundColor: 'blue',
         inactiveBackgroundColor: 'white',
         labelStyle: {
-            fontSize: 10
+            fontSize: 11,
+            margin: 0
         },
         tabStyle: {
-            height: 45
+            height: 45,
+            margin: 0
         },
         style: {
             backgroundColor: '#ffffff'
         },
         upperCaseLabel: false,
-        showIcon: true
+        showIcon: true,
+        indicatorStyle: {
+            backgroundColor: 'lightgray'
+        }
     }
 });
 
@@ -76,7 +105,13 @@ export const Main = StackNavigator({
 
 const customComponent = (props) => (
     <View style={styles.container}>
-        <DrawerItems {...props}/>
+        <View style={styles.logoContainer}>
+            {/*<Image style={styles.logo} source={require('../../../assets/images/logo.png')}/>*/}
+            <Icon name="account-circle" size={100} color="#8e44ad"/>
+        </View>
+        <View style={styles.body}>
+            <DrawerItems {...props}/>
+        </View>
     </View>
 );
 
@@ -94,6 +129,13 @@ export const Root = DrawerNavigator({
             drawerLabel: 'Settings',
             drawerIcon: (<Icon name="settings" size={24} color="#8e44ad"/>)
         }
+    },
+    AboutRoute: {
+        screen: About,
+        navigationOptions: {
+            drawerLabel: 'About Academic English',
+            drawerIcon: (<Icon name="info" size={24} color="#8e44ad"/>)
+        }
     }
 }, {
     contentComponent: customComponent,
@@ -101,9 +143,9 @@ export const Root = DrawerNavigator({
     drawerPosition: 'left',
     contentOptions: {
         activeBackgroundColor: '#ffffff',
-        inactiveBackgroundColor: '#ecf0f1',
+        inactiveBackgroundColor: '#ffffff',
         activeTintColor: '#2c3e50',
-        inactiveTintColor: 'blue',
+        inactiveTintColor: '#2980b9',
         labelStyle: {
             fontFamily: 'Arial',
             fontSize: 12
@@ -124,6 +166,19 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#bdc3c7'
-    }
+        backgroundColor: '#ECF0F1'
+    },
+    logoContainer: {
+        height: '15%',
+        backgroundColor: '#ffffff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 0.5,
+        borderColor: '#ccc'
+    },
+    logo: {
+        width: 200,
+        height: 100
+    },
+    body: {}
 });

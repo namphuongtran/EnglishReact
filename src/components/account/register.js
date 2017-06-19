@@ -5,41 +5,94 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  KeyboardAvoidingView,
   Image
 } from 'react-native';
-// import {Icon} from 'react-native-elements';
+import FBSDK, {LoginManager} from 'react-native-fbsdk';
+// import uuid from 'react-native-uuid'; import User from
+// '../../data/models/user'; import UserRepository from
+// '../../data/database/userRepository';
+
 export default class Register extends Component {
+
+  constructor() {
+    super();
+    // this.user = new User(this.guid(), 'a', 'b', 'ab@gmail.com', '123456', new
+    // Date(), '0123456789', 'Hanoi', new Date(), new Date(), true);
+    // this.user.confirmPassword = '';
+  };
+
+  guid = () => {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0,
+        v = c == 'x'
+          ? r
+          : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  };
+
+  register = () => {
+    if (true) {
+      try {
+        // let user = UserRepository.createUser(this.user); console.log('user: ' +
+        // user);
+      } catch (error) {
+        console.log('catch error: ' + error);
+      }
+      //register as normal console.log(this.user);
+      /*let user = {
+        id: '1',
+        firstName: 'a',
+        lastName: 'b',
+        email: 'ab@gmail.com',
+        password: '123456',
+        dateOfBirth: new Date(),
+        phone: '0123456789',
+        address: 'Hanoi',
+        createdDate: new Date(),
+        updatedDate: new Date(),
+        isActive: true
+      };*/
+
+    }
+  };
+
+  registerFacebook = () => {
+    LoginManager
+      .logInWithReadPermissions(['public_profile'])
+      .then(function (result) {
+        if (result.isCancelled) {
+          console.log('Login was cancelled!');
+        } else {
+          console.log('Login was a success ' + result.grantedPermissions.toString());
+        }
+      }, function (error) {
+        console.log('An error occured: ' + error);
+      });
+  };
+
+  registerTwitter = () => {
+    if (true) {
+      //register by google plus account
+    }
+  };
+
+  changeAvatar = () => {
+    if (true) {
+      //change avatar
+    }
+  };
+
   render() {
-    register = () => {
-      if (true) {
-        //register
-      }
-    }
-
-    registerFacebook = () => {
-      if (true) {
-        //register by facebook account
-      }
-    }
-
-    registerGoogle = () => {
-      if (true) {
-        //register by google plus account
-      }
-    }
-
-    changeAvatar = () => {
-      if (true) {
-        //change avatar
-      }
-    }
-
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={styles.avatarContainer}>
           <View style={styles.avatar}>
             <TouchableOpacity style={styles.avatarButton} onPress={this.changeAvatar}>
-              <Image style={styles.camera} source={require('../../../assets/images/camera.png')}/>
+              <Image
+                style={styles.camera}
+                source={require('../../../assets/images/camera.png')}/>
             </TouchableOpacity>
           </View>
         </View>
@@ -49,14 +102,12 @@ export default class Register extends Component {
               style={styles.inputFirstName}
               placeholder="First name"
               placeholderTextColor="#2c3e50"
-              onSubmitEditing={() => this.inputSurname.focus()}
               returnKeyType="next"
               underlineColorAndroid="transparent"/>
             <TextInput
               style={styles.inputLastName}
               placeholder="Last name"
               placeholderTextColor="#2c3e50"
-              onSubmitEditing={() => this.inputEmail.focus()}
               returnKeyType="next"
               underlineColorAndroid="transparent"/>
           </View>
@@ -66,7 +117,6 @@ export default class Register extends Component {
               placeholder="Email"
               placeholderTextColor="#2c3e50"
               returnKeyType="next"
-              onSubmitEditing={() => this.inputPassword.focus()}
               keyboardType="email-address"
               autoCapitalize="none"
               autoCorrect={false}
@@ -75,9 +125,15 @@ export default class Register extends Component {
               style={styles.input}
               placeholder="Password"
               placeholderTextColor="#2c3e50"
+              returnKeyType="next"
+              secureTextEntry
+              underlineColorAndroid="transparent"/>
+            <TextInput
+              style={styles.input}
+              placeholder="Confirm Password"
+              placeholderTextColor="#2c3e50"
               returnKeyType="go"
               secureTextEntry
-              ref={(password) => this.inputPassword = password}
               underlineColorAndroid="transparent"/>
           </View>
           <View style={styles.buttonContainer}>
@@ -85,21 +141,21 @@ export default class Register extends Component {
               <Text style={styles.buttonLabel}>Register</Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.registerDescription}>or register with</Text>          
+          <Text style={styles.registerDescription}>or register with</Text>
         </View>
         <View style={styles.extraButtonContainer}>
           <View style={styles.facebookButtonContainer}>
-            <TouchableOpacity style={styles.facebookButton} onPress={this.registerFacebook}>              
+            <TouchableOpacity style={styles.facebookButton} onPress={this.registerFacebook}>
               <Text style={styles.buttonLabel}>Facebook</Text>
-            </TouchableOpacity>            
+            </TouchableOpacity>
           </View>
-          <View style={styles.googleButtonContainer}>
-            <TouchableOpacity style={styles.googleButton} onPress={this.registerGoogle}>
-              <Text style={styles.buttonLabel}>Google</Text>
-            </TouchableOpacity>            
+          <View style={styles.twitterButtonContainer}>
+            <TouchableOpacity style={styles.twitterButton} onPress={this.registerTwitter}>
+              <Text style={styles.buttonLabel}>Twitter</Text>
+            </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   };
 }
@@ -112,15 +168,14 @@ const styles = StyleSheet.create({
   avatarContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    // borderColor: 'red', borderWidth: 1,
-    height: '40%'
+    height: '32%'
   },
   avatar: {
     borderWidth: 1,
     borderColor: '#3498db',
     borderRadius: 95,
-    width: '50%',
-    height: '71%'
+    width: '41%',
+    height: '72%'
   },
   formContainer: {
     padding: 10
@@ -135,11 +190,11 @@ const styles = StyleSheet.create({
     color: '#ffffff'
   },
   button: {
-    backgroundColor: '#2c3e50',
+    backgroundColor: '#c0392b',
     paddingVertical: 10,
     borderRadius: 30,
     borderWidth: 1,
-    borderColor: '#2c3e50',
+    borderColor: '#c0392b',
     width: '50%'
   },
   input: {
@@ -159,20 +214,32 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#2c3e50'
   },
+  facebookButtonContainer: {
+    width: '50%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingRight: 5
+  },
+  twitterButtonContainer: {
+    width: '50%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingLeft: 5
+  },
   facebookButton: {
-    backgroundColor: '#2980b9',
+    backgroundColor: '#3B5998',
     paddingVertical: 10,
     borderRadius: 30,
     borderWidth: 1,
-    borderColor: '#3498db',
+    borderColor: '#3B5998',
     width: '100%'
   },
-  googleButton: {
-    backgroundColor: '#c0392b',
+  twitterButton: {
+    backgroundColor: '#1C9BEA',
     paddingVertical: 10,
     borderRadius: 30,
     borderWidth: 1,
-    borderColor: '#c0392b',
+    borderColor: '#1C9BEA',
     width: '100%'
   },
   extraButtonContainer: {
@@ -183,8 +250,7 @@ const styles = StyleSheet.create({
   generalInfoContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 20,
-    // borderColor: 'red', borderWidth: 1
+    marginBottom: 20
   },
   secureInfoContainer: {
     // borderColor: 'red', borderWidth: 1
@@ -209,20 +275,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontStyle: 'italic'
   },
-  facebookButtonContainer: {
-    width: '50%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingRight: 5
-  },
-  googleButtonContainer: {
-    width: '50%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingLeft: 5
-  },
   avatarButton: {
     alignItems: 'center',
-    padding: '22%'
+    padding: '15%'
   }
 });

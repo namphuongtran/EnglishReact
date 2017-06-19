@@ -20,7 +20,7 @@ export default class Splash extends Component {
         </View>
       </View>
     );
-  }
+  };
 }
 
 const styles = StyleSheet.create({
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#2980b9'
+    backgroundColor: '#fff'
   },
   welcome: {
     fontSize: 35,

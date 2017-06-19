@@ -1,30 +1,16 @@
-import Realm from 'realm';
-export default class User extends Realm.Object {}
-User.schema = {
-    name: 'User',
-    primaryKey: 'id',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        firstName: 'string',
-        lastName: 'string',
-        email: 'string',
-        password: 'string',
-        dateOfBirth: {
-            type: 'date',
-            optional: true
-        },
-        phone: {
-            type: 'string',
-            optional: true
-        },
-        address: {
-            type: 'string',
-            optional: true
-        },
-        createdDate: {
-            type: 'date'
-        }
+export default class User {
+    constructor(id, firstName, lastName, email, password, dateOfBirth, phone, address, /*avatar,*/ createdDate, updatedDate, isActive) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.dateOfBirth = dateOfBirth;
+        this.phone = phone;
+        this.address = address;
+        // this.avatar = avatar;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+        this.isActive = isActive;
     }
-}
+};

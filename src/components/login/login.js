@@ -21,21 +21,21 @@ export default class Login extends Component {
                 .navigation
                 .navigate('Grammar');
         }
-    }
+    };
 
     goRegister = () => {
         this
             .props
             .navigation
             .navigate('Register');
-    }
+    };
 
     goForgot = () => {
         this
             .props
             .navigation
             .navigate('ForgotPassword');
-    }
+    };
 
     render() {
         return (
@@ -83,13 +83,13 @@ export default class Login extends Component {
                 </View>
             </KeyboardAvoidingView>
         );
-    }
+    };
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ecf0f1'
+        backgroundColor: '#fff'
     },
     logo: {
         width: 250,
