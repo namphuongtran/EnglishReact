@@ -5,6 +5,7 @@ import {
     View,
     StyleSheet,
     Image,
+    AsyncStorage,
     Text
 } from 'react-native';
 import {DrawerNavigator, DrawerItems, TabNavigator, StackNavigator} from 'react-navigation';
@@ -57,6 +58,7 @@ export const Tabs = TabNavigator({
         }
     }
 }, {
+    initialRouteName: 'Grammar',
     tabBarPosition: 'bottom',
     lazyLoad: true, // render the tabs lazily
     backBehavior: 'none', // back button doesn't take you to the initial tab
@@ -74,17 +76,61 @@ export const Tabs = TabNavigator({
             margin: 0
         },
         style: {
-            backgroundColor: '#ffffff'
+            backgroundColor: '#ffffff',
+            borderTopColor: 'blue',
+            borderTopWidth: 0.5
         },
         upperCaseLabel: false,
         showIcon: true,
         indicatorStyle: {
-            backgroundColor: 'lightgray'
+            backgroundColor: 'red'
         }
     }
 });
 
+const ACCESS_TOKEN = 'access_token';
+
+export class InitScene extends Component {
+
+    constructor() {
+        super();
+        this.getToken();
+    }
+
+    async getToken() {
+        let _this = this;
+        try {
+            const value = await AsyncStorage.getItem(ACCESS_TOKEN);
+            if (value !== null) {
+                setTimeout(function () {
+                    _this
+                        .props
+                        .navigation
+                        .navigate('Grammar');
+                }, 50);
+
+            } else {
+                setTimeout(function () {
+                    _this
+                        .props
+                        .navigation
+                        .navigate('Login');
+                }, 50);
+            }
+        } catch (error) {
+            console.log('Error retrieving data, can not get data access token.');
+        }
+    };
+
+    render() {
+        return null;
+    };
+}
+
 export const Main = StackNavigator({
+    InitScene: {
+        screen: InitScene
+    },
     Login: {
         screen: Login
     },
@@ -98,7 +144,7 @@ export const Main = StackNavigator({
         screen: Tabs
     }
 }, {
-    initialRouteName: 'Login',
+    initialRouteName: 'InitScene',
     mode: 'modal',
     headerMode: 'none'
 });
@@ -158,9 +204,10 @@ export const Root = DrawerNavigator({
 });
 
 export default class Home extends Component {
+
     render() {
         return (<Root/>);
-    }
+    };
 }
 
 const styles = StyleSheet.create({

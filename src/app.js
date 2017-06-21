@@ -8,14 +8,16 @@ export default class GREApp extends Component {
 
   constructor() {
     super();
-    this.state = ({isOverSplash: false});
-    this.showLogin();
+    this.state = ({isOverSplash: false, isOverLogin: false});
+    this.isFirstLoad();
   }
-  showLogin() {
+
+  isFirstLoad() {
     setTimeout(() => this.setState((prevState) => ({
       isOverSplash: !prevState.isOverSplash
     })), 2000);
-  }
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -24,7 +26,7 @@ export default class GREApp extends Component {
           : <Home/>}
       </View>
     );
-  }
+  };
 }
 
 const styles = StyleSheet.create({

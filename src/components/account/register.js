@@ -6,12 +6,16 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
+  AsyncStorage,
   Image
 } from 'react-native';
-import FBSDK, {LoginManager} from 'react-native-fbsdk';
+import FBSDK, {LoginManager, AccessToken} from 'react-native-fbsdk';
+import Grammar from '../grammarEnglish/grammar';
 // import uuid from 'react-native-uuid'; import User from
 // '../../data/models/user'; import UserRepository from
 // '../../data/database/userRepository';
+
+const ACCESS_TOKEN = 'access_token';
 
 export default class Register extends Component {
 
@@ -20,6 +24,35 @@ export default class Register extends Component {
     // this.user = new User(this.guid(), 'a', 'b', 'ab@gmail.com', '123456', new
     // Date(), '0123456789', 'Hanoi', new Date(), new Date(), true);
     // this.user.confirmPassword = '';
+
+  };
+
+  async storeToken(accessToken) {
+    try {
+      await AsyncStorage.setItem(ACCESS_TOKEN, accessToken);
+    } catch (error) {
+      console.log('Some thing went wrong, can not saving data access token to app.');
+    }
+  };
+
+  async getToken() {
+    try {
+      const value = await AsyncStorage.getItem(ACCESS_TOKEN);
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+      }
+    } catch (error) {
+      console.log('Error retrieving data, can not get data access token.');
+    }
+  };
+
+  async removeToken() {
+    try {
+      await AsyncStorage.removeItem(ACCESS_TOKEN);
+    } catch (error) {
+      console.log('Can not remove data access token.');
+    }
   };
 
   guid = () => {
@@ -59,13 +92,30 @@ export default class Register extends Component {
   };
 
   registerFacebook = () => {
+    let _this = this;
     LoginManager
       .logInWithReadPermissions(['public_profile'])
       .then(function (result) {
         if (result.isCancelled) {
-          console.log('Login was cancelled!');
+          console.log('Login was cancelled');
         } else {
-          console.log('Login was a success ' + result.grantedPermissions.toString());
+          console.log('Login was successful with permissions: ' + result.grantedPermissions.toString());
+          
+          AccessToken
+            .getCurrentAccessToken()
+            .then(token => {
+              if (token != null) {
+                console.log(token.accessToken);
+                _this.storeToken(token.accessToken);
+                _this
+                  .props
+                  .navigation
+                  .navigate('Grammar');
+              }
+            }, reject => {
+              console.log(reject);
+            });
+          //console.log(_this);
         }
       }, function (error) {
         console.log('An error occured: ' + error);
@@ -85,6 +135,7 @@ export default class Register extends Component {
   };
 
   render() {
+    const {navigate} = this.props.navigation;
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <View style={styles.avatarContainer}>

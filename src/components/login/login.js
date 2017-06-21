@@ -14,6 +14,7 @@ import Register from '../account/register';
 import ForgotPassword from '../account/forgotPassword';
 
 export default class Login extends Component {
+
     goHome = () => {
         if (true) {
             this
