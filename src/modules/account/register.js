@@ -6,16 +6,14 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
-  AsyncStorage,
   Image
 } from 'react-native';
 import FBSDK, {LoginManager, AccessToken} from 'react-native-fbsdk';
-import Grammar from '../grammarEnglish/grammar';
+import Helper from '../../common/helper';
+import Grammar from '../grammar/grammar';
 // import uuid from 'react-native-uuid'; import User from
 // '../../data/models/user'; import UserRepository from
 // '../../data/database/userRepository';
-
-const ACCESS_TOKEN = 'access_token';
 
 export default class Register extends Component {
 
@@ -25,34 +23,6 @@ export default class Register extends Component {
     // Date(), '0123456789', 'Hanoi', new Date(), new Date(), true);
     // this.user.confirmPassword = '';
 
-  };
-
-  async storeToken(accessToken) {
-    try {
-      await AsyncStorage.setItem(ACCESS_TOKEN, accessToken);
-    } catch (error) {
-      console.log('Some thing went wrong, can not saving data access token to app.');
-    }
-  };
-
-  async getToken() {
-    try {
-      const value = await AsyncStorage.getItem(ACCESS_TOKEN);
-      if (value !== null) {
-        // We have data!!
-        console.log(value);
-      }
-    } catch (error) {
-      console.log('Error retrieving data, can not get data access token.');
-    }
-  };
-
-  async removeToken() {
-    try {
-      await AsyncStorage.removeItem(ACCESS_TOKEN);
-    } catch (error) {
-      console.log('Can not remove data access token.');
-    }
   };
 
   guid = () => {
@@ -100,13 +70,17 @@ export default class Register extends Component {
           console.log('Login was cancelled');
         } else {
           console.log('Login was successful with permissions: ' + result.grantedPermissions.toString());
-          
+
           AccessToken
             .getCurrentAccessToken()
             .then(token => {
               if (token != null) {
-                console.log(token.accessToken);
-                _this.storeToken(token.accessToken);
+                Helper
+                  .storeToken()
+                  .then(token => {
+                    token.accessToken
+                  });
+                  
                 _this
                   .props
                   .navigation

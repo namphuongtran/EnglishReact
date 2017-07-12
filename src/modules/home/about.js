@@ -119,7 +119,7 @@ export default class About extends Component {
                     </View>
                     <View style={styles.aboutInfo}>
                         <Text style={styles.footerTitle}>© {new Date().getFullYear() - 1}
-                            - {new Date().getFullYear()}
+                            - {new Date().getFullYear() }
                             Academic English
                         </Text>
                     </View>

@@ -23,7 +23,7 @@ export default class Favorites extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ecf0f1'
+        backgroundColor: '#fff'
     },
     header: {
         alignItems:'center',

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {AppRegistry, StyleSheet, Text, View} from 'react-native';
 import Splash from './splash';
-import Home from './components/home/home';
+import Intro from './components/home/intro';
+import Home from './modules/home/home';
 
 export default class GREApp extends Component {
   isOverSplash;

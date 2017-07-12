@@ -9,7 +9,7 @@ import {
     KeyboardAvoidingView,
     Image
 } from 'react-native';
-import Grammar from '../grammarEnglish/grammar';
+import Grammar from '../grammar/grammar';
 import Register from '../account/register';
 import ForgotPassword from '../account/forgotPassword';
 

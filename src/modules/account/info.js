@@ -9,14 +9,13 @@ import {
     AsyncStorage,
     Image
 } from 'react-native';
-import Login from '../login/login';
-
-const ACCESS_TOKEN = 'access_token';
+import Helper from '../../common/helper';
+import Login from './login';
 
 export default class AccountInfo extends Component {
 
     logout = () => {        
-        this.removeToken();
+        Helper.removeToken().then();
         this
             .props
             .navigation
